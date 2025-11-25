@@ -17,7 +17,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: recursive
       
@@ -84,13 +84,13 @@ jobs:
           ./scripts/package.sh windows ${{ steps.version.outputs.VERSION }}
       
       - name: Upload macOS artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: gateway-${{ steps.version.outputs.VERSION }}-macos
           path: release/gateway-${{ steps.version.outputs.VERSION }}-macos.zip
       
       - name: Upload Windows artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: gateway-${{ steps.version.outputs.VERSION }}-windows
           path: release/gateway-${{ steps.version.outputs.VERSION }}-windows.zip

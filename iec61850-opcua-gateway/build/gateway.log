@@ -1,0 +1,65 @@
+[2025-11-23 15:57:02.498] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-23 15:57:02.498] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-23 15:57:02.499] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-23 15:57:02.499] [gateway] [info] Initializing Gateway Application v1.0.0
+[2025-11-23 15:57:02.499] [gateway] [info] Initializing services...
+[2025-11-23 15:57:02.499] [gateway] [info] Starting services...
+[2025-11-23 15:57:02.499] [gateway] [info] Gateway Application started successfully
+[2025-11-23 15:57:02.499] [gateway] [info] REST API Server started on port 6850
+[2025-11-23 15:57:02.499] [gateway] [info] Gateway is running. UI available at http://localhost:6850
+[2025-11-23 15:57:02.499] [gateway] [info] Serving UI from ./www directory on port 6850
+[2025-11-23 15:58:02.047] [gateway] [info] Connected to IED at 127.0.0.1:10102
+[2025-11-23 15:58:02.047] [gateway] [info] MMS API: Connected to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 15:58:02.051] [gateway] [info] MMS API: Browsed 23 nodes for TestIED_BasicIO
+[2025-11-23 15:58:12.667] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO4 on TestIED_BasicIO
+[2025-11-23 16:13:41.100] [gateway] [info] MMS API: Wrote false to simpleIOGenericIO/GGIO1.SPCSO4 on TestIED_BasicIO
+[2025-11-23 16:13:56.267] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 16:14:20.955] [gateway] [info] MMS API: Wrote false to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 16:14:26.946] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 16:14:44.580] [gateway] [info] MMS API: Wrote false to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 16:14:48.479] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 16:15:33.032] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 16:15:36.167] [gateway] [info] MMS API: Wrote false to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 16:15:48.579] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 16:16:20.707] [gateway] [info] MMS API: Wrote false to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 16:16:25.897] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 16:18:42.494] [gateway] [info] Parsing SCD file: ./config/station.scd
+[2025-11-23 16:18:42.495] [gateway] [info] PRP detected: IED ControlIED1 appears in multiple networks
+[2025-11-23 16:18:42.495] [gateway] [info] Detected network type: PRP
+[2025-11-23 16:18:42.495] [gateway] [info] Created PRP star topology with 4 connections
+[2025-11-23 16:18:42.495] [gateway] [info] Parsed 5 IEDs and 4 connections
+[2025-11-23 16:18:42.495] [gateway] [info] Topology API called, returned 5 IEDs
+[2025-11-23 16:23:39.778] [gateway] [info] Parsing SCD file: ./config/station.scd
+[2025-11-23 16:23:39.779] [gateway] [info] PRP detected: IED ControlIED1 appears in multiple networks
+[2025-11-23 16:23:39.779] [gateway] [info] Detected network type: PRP
+[2025-11-23 16:23:39.779] [gateway] [info] Created PRP star topology with 4 connections
+[2025-11-23 16:23:39.779] [gateway] [info] Parsed 5 IEDs and 4 connections
+[2025-11-23 16:23:39.779] [gateway] [info] Topology API called, returned 5 IEDs
+[2025-11-23 16:24:18.959] [gateway] [info] Parsing SCD file: ./config/station.scd
+[2025-11-23 16:24:18.960] [gateway] [info] PRP detected: IED ControlIED1 appears in multiple networks
+[2025-11-23 16:24:18.961] [gateway] [info] Detected network type: PRP
+[2025-11-23 16:24:18.961] [gateway] [info] Created PRP star topology with 4 connections
+[2025-11-23 16:24:18.961] [gateway] [info] Parsed 5 IEDs and 4 connections
+[2025-11-23 16:24:18.961] [gateway] [info] Topology API called, returned 5 IEDs
+[2025-11-23 16:32:14.717] [gateway] [info] Stopping gateway...
+[2025-11-23 16:32:14.719] [gateway] [info] REST API Server stopped
+[2025-11-23 16:32:14.719] [gateway] [info] Stopping Gateway Application...
+[2025-11-23 16:32:14.719] [gateway] [info] Stopping services...
+[2025-11-23 16:32:14.719] [gateway] [info] Stopping services...
+[2025-11-23 16:32:14.719] [gateway] [info] Gateway stopped.
+libc++abi: terminating due to uncaught exception of type std::__1::system_error: mutex lock failed: Invalid argument
+[2025-11-24 18:53:01.643] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 18:53:01.644] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 18:53:01.644] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 18:54:19.654] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 18:54:19.655] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 18:54:19.655] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 18:59:41.042] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 18:59:41.042] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 18:59:41.043] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 19:07:16.734] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 19:07:16.735] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 19:07:16.736] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 19:10:44.951] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 19:10:44.952] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 19:10:44.952] [gateway] [info] Configuration loaded. Version: 1.0.0

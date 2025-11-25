@@ -1,0 +1,379 @@
+[2025-11-23 21:02:48.851] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-23 21:02:48.852] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-23 21:02:48.852] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-23 21:02:48.852] [gateway] [info] Initializing Gateway Application v1.0.0
+[2025-11-23 21:02:48.852] [gateway] [info] Initializing services...
+[2025-11-23 21:02:48.852] [gateway] [info] Starting services...
+[2025-11-23 21:02:48.852] [gateway] [info] Gateway Application started successfully
+[2025-11-23 21:02:48.852] [gateway] [info] REST API Server started on port 6850
+[2025-11-23 21:02:48.852] [gateway] [info] Gateway is running. UI available at http://localhost:6850
+[2025-11-23 21:02:48.852] [gateway] [info] Serving UI from ./www directory on port 6850
+[2025-11-23 21:03:12.942] [gateway] [info] Connected to IED at 127.0.0.1:10102
+[2025-11-23 21:03:12.942] [gateway] [info] MMS API: Connected to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:03:12.953] [gateway] [info] MMS API: Browsed 23 nodes for TestIED_BasicIO
+[2025-11-23 21:03:27.504] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 21:03:31.691] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 21:03:35.996] [gateway] [info] MMS API: Wrote false to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 21:03:40.143] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 21:03:49.621] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO2 on TestIED_BasicIO
+[2025-11-23 21:04:41.629] [gateway] [info] MMS API: Wrote false to simpleIOGenericIO/GGIO1.SPCSO2 on TestIED_BasicIO
+[2025-11-23 21:05:08.972] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO2 on TestIED_BasicIO
+[2025-11-23 21:05:30.344] [gateway] [info] MMS API: Wrote false to simpleIOGenericIO/GGIO1.SPCSO2 on TestIED_BasicIO
+[2025-11-23 21:05:48.164] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO2 on TestIED_BasicIO
+[2025-11-23 21:06:05.265] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO2 on TestIED_BasicIO
+[2025-11-23 21:06:07.431] [gateway] [info] MMS API: Wrote false to simpleIOGenericIO/GGIO1.SPCSO2 on TestIED_BasicIO
+[2025-11-23 21:06:09.379] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO2 on TestIED_BasicIO
+[2025-11-23 21:06:29.491] [gateway] [info] MMS API: Exported cid for TestIED_BasicIO
+[2025-11-23 21:07:15.177] [gateway] [info] Connected to IED at 127.0.0.1:10102
+[2025-11-23 21:07:28.708] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:07:28.709] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:07:30.412] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:07:30.412] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:07:32.276] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:07:32.276] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:07:33.233] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:07:33.233] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:07:33.715] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:07:33.715] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:07:33.923] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:07:33.923] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:07:34.135] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:07:34.135] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:07:34.348] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:07:34.348] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:07:34.545] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:07:34.545] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:07:34.763] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:07:34.763] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:13:58.870] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:13:58.872] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:19:36.537] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:19:36.538] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:21:54.072] [gateway] [error] Failed to connect to IED at 127.0.0.1:10102. Error: 5
+[2025-11-23 21:21:54.072] [gateway] [error] MMS API: Failed to connect to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:23:18.245] [gateway] [info] Connected to IED at 127.0.0.1:10102
+[2025-11-23 21:23:18.246] [gateway] [info] MMS API: Connected to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:23:18.266] [gateway] [info] MMS API: Browsed 23 nodes for TestIED_BasicIO
+[2025-11-23 21:25:51.714] [gateway] [info] Connected to IED at 127.0.0.1:10102
+[2025-11-23 21:25:51.737] [gateway] [info] Disconnected from IED at 127.0.0.1:10102
+[2025-11-23 21:25:51.749] [gateway] [info] MMS API: Connected to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:25:51.762] [gateway] [info] MMS API: Browsed 23 nodes for TestIED_BasicIO
+[2025-11-23 21:30:13.140] [gateway] [info] MMS API: Wrote true to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 21:40:17.485] [gateway] [info] Connected to IED at 127.0.0.1:10102
+[2025-11-23 21:40:17.504] [gateway] [info] Disconnected from IED at 127.0.0.1:10102
+[2025-11-23 21:40:17.515] [gateway] [info] MMS API: Connected to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:40:17.529] [gateway] [info] MMS API: Browsed 23 nodes for TestIED_BasicIO
+[2025-11-23 21:41:39.477] [gateway] [info] Connected to IED at 127.0.0.1:10102
+[2025-11-23 21:41:39.490] [gateway] [info] Disconnected from IED at 127.0.0.1:10102
+[2025-11-23 21:41:39.502] [gateway] [info] MMS API: Connected to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:41:39.530] [gateway] [info] MMS API: Browsed 23 nodes for TestIED_BasicIO
+[2025-11-23 21:58:07.998] [gateway] [info] Connected to IED at 127.0.0.1:10102
+[2025-11-23 21:58:08.015] [gateway] [info] Disconnected from IED at 127.0.0.1:10102
+[2025-11-23 21:58:08.026] [gateway] [info] MMS API: Connected to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 21:58:08.040] [gateway] [info] MMS API: Browsed 23 nodes for TestIED_BasicIO
+[2025-11-23 22:01:51.594] [gateway] [info] Parsing SCD file: ./config/station.scd
+[2025-11-23 22:01:51.595] [gateway] [info] PRP detected: IED ControlIED1 appears in multiple networks
+[2025-11-23 22:01:51.595] [gateway] [info] Detected network type: PRP
+[2025-11-23 22:01:51.595] [gateway] [info] Created PRP star topology with 4 connections
+[2025-11-23 22:01:51.595] [gateway] [info] Parsed 5 IEDs and 4 connections
+[2025-11-23 22:01:51.595] [gateway] [info] Topology API called, returned 5 IEDs
+[2025-11-23 22:05:53.924] [gateway] [info] Connected to IED at 127.0.0.1:10102
+[2025-11-23 22:05:53.935] [gateway] [info] Disconnected from IED at 127.0.0.1:10102
+[2025-11-23 22:05:53.948] [gateway] [info] MMS API: Connected to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 22:05:53.955] [gateway] [info] MMS API: Browsed 23 nodes for TestIED_BasicIO
+[2025-11-23 22:17:37.761] [gateway] [info] Connected to IED at 127.0.0.1:10102
+[2025-11-23 22:17:37.779] [gateway] [info] Disconnected from IED at 127.0.0.1:10102
+[2025-11-23 22:17:37.792] [gateway] [info] MMS API: Connected to TestIED_BasicIO at 127.0.0.1:10102
+[2025-11-23 22:17:37.805] [gateway] [info] MMS API: Browsed 23 nodes for TestIED_BasicIO
+[2025-11-23 22:18:22.291] [gateway] [info] MMS API: Wrote false to simpleIOGenericIO/GGIO1.SPCSO1 on TestIED_BasicIO
+[2025-11-23 22:19:12.887] [gateway] [info] Parsing SCD file: ./config/station.scd
+[2025-11-23 22:19:12.887] [gateway] [info] PRP detected: IED ControlIED1 appears in multiple networks
+[2025-11-23 22:19:12.887] [gateway] [info] Detected network type: PRP
+[2025-11-23 22:19:12.887] [gateway] [info] Created PRP star topology with 4 connections
+[2025-11-23 22:19:12.887] [gateway] [info] Parsed 5 IEDs and 4 connections
+[2025-11-23 22:19:12.887] [gateway] [info] Topology API called, returned 5 IEDs
+[2025-11-23 22:26:14.957] [gateway] [info] Parsing SCD file: ./config/station.scd
+[2025-11-23 22:26:14.960] [gateway] [info] PRP detected: IED ControlIED1 appears in multiple networks
+[2025-11-23 22:26:14.960] [gateway] [info] Detected network type: PRP
+[2025-11-23 22:26:14.960] [gateway] [info] Created PRP star topology with 4 connections
+[2025-11-23 22:26:14.960] [gateway] [info] Parsed 5 IEDs and 4 connections
+[2025-11-23 22:26:14.960] [gateway] [info] Topology API called, returned 5 IEDs
+[2025-11-23 22:58:21.710] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-23 22:58:21.713] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-23 22:58:21.713] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-23 22:59:41.783] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-23 22:59:41.784] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-23 22:59:41.784] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 01:16:05.291] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 01:16:05.292] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 01:16:05.292] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 01:29:24.647] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 01:29:24.648] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 01:29:24.648] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 01:31:30.619] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 01:31:30.620] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 01:31:30.620] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 01:46:49.512] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 01:46:49.513] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 01:46:49.513] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 02:12:24.663] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 02:12:24.664] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 02:12:24.664] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 02:14:20.029] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 02:14:20.029] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 02:14:20.029] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 02:38:05.425] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 02:38:05.428] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 02:38:05.428] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 02:56:34.436] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 02:56:34.437] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 02:56:34.437] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 03:02:03.423] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 03:02:03.425] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 03:02:03.425] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 03:12:09.649] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 03:12:09.650] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 03:12:09.650] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 03:14:19.539] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 03:14:19.539] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 03:14:19.539] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 03:19:24.528] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 03:19:24.530] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 03:19:24.530] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 03:20:34.141] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 03:20:34.142] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 03:20:34.142] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 03:23:13.542] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 03:23:13.542] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 03:23:13.542] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 03:27:16.349] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 03:27:16.350] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 03:27:16.350] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 03:31:58.502] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 03:31:58.503] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 03:31:58.503] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 03:34:53.329] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 03:34:53.331] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 03:34:53.331] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 12:05:27.633] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 12:05:27.634] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 12:05:27.634] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 12:49:39.862] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 12:49:39.866] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 12:49:39.866] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 13:07:04.677] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 13:07:04.678] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 13:07:04.678] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 13:37:46.540] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 13:37:46.541] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 13:37:46.541] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 13:43:02.000] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 13:43:02.002] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 13:43:02.002] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 14:06:41.938] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 14:06:41.939] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 14:06:41.939] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 14:16:55.706] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 14:16:55.707] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 14:16:55.707] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 14:30:34.487] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 14:30:34.489] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 14:30:34.489] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 14:38:20.488] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 14:38:20.490] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 14:38:20.490] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 14:50:04.168] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 14:50:04.169] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 14:50:04.169] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 14:54:23.838] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 14:54:23.839] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 14:54:23.839] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 14:57:03.222] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 14:57:03.224] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 14:57:03.224] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 15:20:11.056] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 15:20:11.058] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 15:20:11.058] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 15:22:27.458] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 15:22:27.460] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 15:22:27.460] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 15:26:05.599] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 15:26:05.600] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 15:26:05.600] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 15:29:05.620] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 15:29:05.621] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 15:29:05.621] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 15:35:30.123] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 15:35:30.126] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 15:35:30.126] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 15:35:49.637] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 15:35:49.638] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 15:35:49.638] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 18:13:48.057] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 18:13:48.059] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 18:13:48.059] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 18:27:13.301] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 18:27:13.302] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 18:27:13.302] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 18:28:32.638] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 18:28:32.639] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 18:28:32.639] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 18:29:38.444] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 18:29:38.446] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 18:29:38.446] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 18:29:49.924] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 18:29:49.925] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 18:29:49.925] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 18:32:53.087] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 18:32:53.096] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 18:32:53.096] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 18:37:40.443] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 18:37:40.444] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 18:37:40.444] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 18:42:21.560] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 18:42:21.561] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 18:42:21.561] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 18:51:38.626] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 18:51:38.627] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 18:51:38.627] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 19:02:42.938] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 19:02:42.939] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 19:02:42.939] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 19:12:50.170] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 19:12:50.171] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 19:12:50.171] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 19:39:14.124] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 19:39:14.125] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 19:39:14.125] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 19:48:46.708] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 19:48:46.709] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 19:48:46.709] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 20:08:33.160] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 20:08:33.161] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 20:08:33.161] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 20:14:21.297] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 20:14:21.298] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 20:14:21.298] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 20:21:38.343] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 20:21:38.344] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 20:21:38.344] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 20:23:43.398] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 20:23:43.401] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 20:23:43.401] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 20:31:26.299] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 20:31:26.300] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 20:31:26.300] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 20:33:01.027] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 20:33:01.028] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 20:33:01.028] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 20:41:34.381] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 20:41:34.383] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 20:41:34.383] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 20:44:10.112] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 20:44:10.114] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 20:44:10.114] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 20:49:12.296] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 20:49:12.297] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 20:49:12.297] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 21:02:21.431] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 21:02:21.431] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 21:02:21.431] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 21:11:33.285] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 21:11:33.286] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 21:11:33.286] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 21:15:42.367] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 21:15:42.369] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 21:15:42.369] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 21:19:33.063] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 21:19:33.064] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 21:19:33.064] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 21:19:58.903] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 21:19:58.904] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 21:19:58.904] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 21:20:36.123] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 21:20:36.124] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 21:20:36.124] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 21:30:13.893] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 21:30:13.894] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 21:30:13.894] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 21:32:38.338] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 21:32:38.339] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 21:32:38.339] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 21:32:55.682] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 21:32:55.683] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 21:32:55.683] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 21:33:08.963] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 21:33:08.964] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 21:33:08.964] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 22:48:26.054] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 22:48:26.056] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 22:48:26.056] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 23:15:35.311] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 23:15:35.313] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 23:15:35.313] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 23:27:49.744] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 23:27:49.745] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 23:27:49.745] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 23:31:37.897] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 23:31:37.898] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 23:31:37.898] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 23:41:18.962] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 23:41:18.963] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 23:41:18.963] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-24 23:56:11.080] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-24 23:56:11.081] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-24 23:56:11.081] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 00:00:01.991] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 00:00:01.994] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 00:00:01.994] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 00:02:29.943] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 00:02:29.945] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 00:02:29.945] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 00:03:32.001] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 00:03:32.002] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 00:03:32.002] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 00:05:08.099] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 00:05:08.101] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 00:05:08.101] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 00:08:37.255] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 00:08:37.255] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 00:08:37.256] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 00:18:27.767] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 00:18:27.769] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 00:18:27.769] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 01:30:21.451] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 01:30:21.452] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 01:30:21.452] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 01:37:28.636] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 01:37:28.637] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 01:37:28.637] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 01:56:57.847] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 01:56:57.849] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 01:56:57.849] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 02:09:56.527] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 02:09:56.528] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 02:09:56.528] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 08:31:13.285] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 08:31:13.287] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 08:31:13.287] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 08:32:39.348] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 08:32:39.351] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 08:32:39.351] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 08:58:49.258] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 08:58:49.261] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 08:58:49.261] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 09:08:06.817] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 09:08:06.818] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 09:08:06.818] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 09:43:31.051] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 09:43:31.052] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 09:43:31.052] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 09:49:47.934] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 09:49:47.935] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 09:49:47.935] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 09:56:09.837] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 09:56:09.839] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 09:56:09.839] [gateway] [info] Configuration loaded. Version: 1.0.0
+[2025-11-25 10:02:23.109] [gateway] [info] IEC61850 to OPC UA Gateway starting...
+[2025-11-25 10:02:23.110] [gateway] [info] Loaded configuration from config/gateway.yaml
+[2025-11-25 10:02:23.110] [gateway] [info] Configuration loaded. Version: 1.0.0

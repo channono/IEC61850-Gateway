@@ -1,0 +1,27 @@
+find_path(LIBIEC61850_INCLUDE_DIR
+    NAMES libiec61850/iec61850_client.h
+    HINTS "${CMAKE_SOURCE_DIR}/../deps/install/include"
+)
+
+find_library(LIBIEC61850_LIBRARY
+    NAMES iec61850
+    HINTS "${CMAKE_SOURCE_DIR}/../deps/install/lib"
+)
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(LibIEC61850
+    REQUIRED_VARS LIBIEC61850_LIBRARY LIBIEC61850_INCLUDE_DIR
+)
+
+if(LibIEC61850_FOUND)
+    set(LIBIEC61850_LIBRARIES ${LIBIEC61850_LIBRARY})
+    set(LIBIEC61850_INCLUDE_DIRS ${LIBIEC61850_INCLUDE_DIR})
+    
+    if(NOT TARGET LibIEC61850::LibIEC61850)
+        add_library(LibIEC61850::LibIEC61850 UNKNOWN IMPORTED)
+        set_target_properties(LibIEC61850::LibIEC61850 PROPERTIES
+            IMPORTED_LOCATION "${LIBIEC61850_LIBRARY}"
+            INTERFACE_INCLUDE_DIRECTORIES "${LIBIEC61850_INCLUDE_DIR}"
+        )
+    endif()
+endif()

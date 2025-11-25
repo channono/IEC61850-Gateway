@@ -1,0 +1,13 @@
+version: "1.0.0"
+
+opcua:
+  port: 4840
+  endpoint_url: "opc.tcp://0.0.0.0:4840"
+  enable_security: false
+
+ieds:
+  - name: "TestIED_BasicIO"
+    ip: "192.168.0.40"
+    port: 10102
+    enabled: true
+    description: "libIEC61850 server_example_basic_io"

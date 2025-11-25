@@ -1,0 +1,13 @@
+prefix=/Users/danielliu/IEC6850/deps/install
+exec_prefix=/Users/danielliu/IEC6850/deps/install/bin
+libdir=/Users/danielliu/IEC6850/deps/install/lib
+sharedlibdir=/Users/danielliu/IEC6850/deps/install/lib
+includedir=/Users/danielliu/IEC6850/deps/install/include
+
+Name: libiec61850
+Description: 
+Version: 1.6.1
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -liec61850
+Cflags: -I${includedir}

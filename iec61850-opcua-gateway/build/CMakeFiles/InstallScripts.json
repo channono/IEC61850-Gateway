@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/danielliu/IEC6850/iec61850-opcua-gateway/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

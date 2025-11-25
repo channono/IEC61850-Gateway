@@ -1,0 +1,242 @@
+/* MMS Test Page Specific Styles */
+
+/* Scoped Layout for MMS View - Strict Vertical Flex */
+#view-mms {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    /* Allow vertical scrolling */
+    padding-bottom: 0.5vw;
+    /* Reduced padding */
+    box-sizing: border-box;
+}
+
+/* Hide page header to save vertical space */
+#view-mms .page-header {
+    display: none;
+}
+
+/* Row 1: Stats - Fixed Compact Height */
+#view-mms .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8vw;
+    margin-bottom: 0.8vw;
+    width: 100%;
+    flex: 0 0 120px;
+    /* Fixed height as requested */
+    /* Don't grow */
+    height: 120px;
+}
+
+/* Row 2: Connection/Browser */
+#view-mms .row.row-2col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8vw;
+    margin-bottom: 0.8vw;
+    width: 100%;
+    flex: 1;
+    /* Grow to fill space */
+    min-height: 350px;
+    /* Prevent shrinking too much, trigger scroll */
+}
+
+/* Row 3: Controls/Logs */
+#view-mms .row:not(.row-2col) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8vw;
+    margin-bottom: 0;
+    width: 100%;
+    flex: 1;
+    min-height: 300px;
+    /* Prevent shrinking too much, trigger scroll */
+}
+
+#view-mms .col-8 {
+    grid-column: span 2;
+}
+
+/* Data Model Browser Inner Layout - 50/50 Split */
+#view-mms .col-8 .row {
+    grid-template-columns: 1fr 1fr;
+    /* Equal width */
+}
+
+#view-mms .col-8 .row .col-8 {
+    grid-column: auto;
+    /* Reset span */
+}
+
+/* Grid Item Constraints */
+#view-mms .stats-grid .card,
+#view-mms .stats-grid .stat-card,
+#view-mms .row .card,
+#view-mms .row>* {
+    min-width: 0;
+    margin: 0 !important;
+    width: auto;
+    max-width: none;
+    height: 100%;
+    /* Force card to fill grid cell height */
+}
+
+/* Stat Card Specific - Left Align Content with Gap */
+#view-mms .stat-card {
+    display: flex;
+    flex-direction: row !important;
+    /* Force row layout */
+    align-items: center;
+    /* Vertically center */
+    justify-content: flex-start;
+    /* Left align */
+    padding: 0 1.5vw;
+    /* Horizontal padding */
+    gap: 1.5vw;
+    /* Space between icon and text */
+}
+
+#view-mms .stat-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+/* Card Internal Layout - Compact */
+#view-mms .card {
+    display: flex;
+    flex-direction: column;
+}
+
+#view-mms .card-body {
+    padding: 0.8vw;
+    /* Reduced padding */
+    flex: 1;
+    /* Fill remaining card space */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Prevent body overflow */
+    min-height: 0;
+}
+
+/* Internal Scrolling Containers */
+#mms-report-log,
+.connection-log,
+#mms-data-tree,
+#mms-realtime-data {
+    flex: 1 1 0;
+    /* Flex grow, shrink, basis 0 - CRITICAL for proper sizing */
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* Report Log Styling - Compact */
+#mms-report-log {
+    display: flex;
+    flex-direction: column-reverse;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.7rem, 0.75vw, 0.9rem);
+    /* Smaller font */
+    background: #1a1d2e;
+    color: #e0e0e0;
+    padding: 0.5vw;
+    border-radius: 0.5vw;
+    margin-top: 0.5vw;
+}
+
+/* Connection Log Styling - Simplified */
+.connection-log {
+    /* Removed background and border as requested */
+    background: transparent;
+    border: none;
+    padding: 0.5vw;
+    font-family: monospace;
+    font-size: clamp(0.7rem, 0.75vw, 0.9rem);
+    margin-top: 0.5vw;
+}
+
+/* Override global log-entry styles for connection log */
+.connection-log .log-entry {
+    background: transparent !important;
+    border: none !important;
+    padding: 0.2vw 0 !important;
+    border-radius: 0 !important;
+    color: var(--text-muted);
+}
+
+.connection-log .log-success {
+    color: var(--success);
+}
+
+.connection-log .log-error {
+    color: var(--danger);
+}
+
+/* Remove border above buttons as requested */
+#view-mms .form-actions {
+    border-top: none !important;
+    padding-top: 0 !important;
+    margin-top: 0.5vw;
+}
+
+.read-result {
+    background: rgba(26, 29, 46, 0.3);
+    border-radius: 0.5vw;
+    padding: 0.8vw;
+    font-family: monospace;
+    font-size: clamp(0.75rem, 0.8vw, 1rem);
+    margin-top: auto;
+    /* Push to bottom if needed */
+}
+
+/* Data Model Detail View */
+#mms-values-container {
+    text-align: left !important;
+    /* Override text-center utility */
+    padding: 0.5vw;
+}
+
+.mms-detail-header {
+    color: #667eea;
+    margin-bottom: 0.5vw;
+    font-weight: 600;
+    font-size: 1.1em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.3vw;
+}
+
+.mms-detail-grid {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.2vw 1vw;
+    font-size: 0.9em;
+    line-height: 1.3;
+}
+
+.mms-detail-label {
+    color: var(--text-muted);
+    text-align: right;
+}
+
+.mms-detail-value {
+    color: #e0e0e0;
+    font-family: monospace;
+}
+
+.mms-nested-grid {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.1vw 1vw;
+    margin-top: 0.1vw;
+    padding-left: 0.5vw;
+    /* border-left removed as requested */
+}
+
+.mms-nested-key {
+    color: #667eea;
+    font-size: 0.9em;
+}

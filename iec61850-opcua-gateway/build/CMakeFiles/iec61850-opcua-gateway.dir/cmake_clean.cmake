@@ -1,0 +1,43 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/api/rest_api.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/api/rest_api.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/api/topology_parser.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/api/topology_parser.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/core/application.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/core/application.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/core/config_parser.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/core/config_parser.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/core/logger.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/core/logger.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/core/service_manager.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/core/service_manager.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/iec61850/goose/goose_receiver.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/iec61850/goose/goose_receiver.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/iec61850/goose/goose_subscriber_manager.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/iec61850/goose/goose_subscriber_manager.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/iec61850/mms/mms_connection.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/iec61850/mms/mms_connection.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/iec61850/scl/scd_generator.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/iec61850/scl/scd_generator.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/iec61850/scl/scl_generator.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/iec61850/scl/scl_generator.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/iec61850/scl/scl_parser.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/iec61850/scl/scl_parser.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/main.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/main.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/opcua/data_binder.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/opcua/data_binder.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/opcua/namespace/namespace_builder.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/opcua/namespace/namespace_builder.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/opcua/opcua_server.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/opcua/opcua_server.cpp.o.d"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/opcua/subscription/subscription_manager.cpp.o"
+  "CMakeFiles/iec61850-opcua-gateway.dir/src/opcua/subscription/subscription_manager.cpp.o.d"
+  "iec61850-opcua-gateway"
+  "iec61850-opcua-gateway.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/iec61850-opcua-gateway.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

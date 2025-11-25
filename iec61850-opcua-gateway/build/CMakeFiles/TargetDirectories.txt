@@ -1,0 +1,9 @@
+/Users/danielliu/IEC6850/iec61850-opcua-gateway/build/CMakeFiles/pugixml.dir
+/Users/danielliu/IEC6850/iec61850-opcua-gateway/build/CMakeFiles/iec61850-opcua-gateway.dir
+/Users/danielliu/IEC6850/iec61850-opcua-gateway/build/CMakeFiles/test.dir
+/Users/danielliu/IEC6850/iec61850-opcua-gateway/build/CMakeFiles/edit_cache.dir
+/Users/danielliu/IEC6850/iec61850-opcua-gateway/build/CMakeFiles/rebuild_cache.dir
+/Users/danielliu/IEC6850/iec61850-opcua-gateway/build/CMakeFiles/list_install_components.dir
+/Users/danielliu/IEC6850/iec61850-opcua-gateway/build/CMakeFiles/install.dir
+/Users/danielliu/IEC6850/iec61850-opcua-gateway/build/CMakeFiles/install/local.dir
+/Users/danielliu/IEC6850/iec61850-opcua-gateway/build/CMakeFiles/install/strip.dir

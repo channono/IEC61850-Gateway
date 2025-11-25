@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IEC61850 Gateway</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/goose-monitor.css">
+    <script src="js/i18n.js"></script>
+    <script src="js/topology-api.js"></script>
+    <script src="js/goose-monitor.js?v=1.5.1"></script>
+    <link rel="stylesheet" href="css/mms-test.css">
+    <script src="js/mms-test.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-bolt"></i>
+                <span>IEC61850 Gateway</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active" data-page="dashboard">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link" data-page="ieds">
+                    <i class="fa-solid fa-server"></i>
+                    <span>IED Management</span>
+                </a>
+                <a href="#" class="nav-link" data-page="goose">
+                    <i class="fa-solid fa-network-wired"></i>
+                    <span>GOOSE</span>
+                </a>
+                <a href="#" class="nav-link" data-page="mms">
+                    <i class="fa-solid fa-plug-circle-check"></i>
+                    <span>MMS Test</span>
+                </a>
+                <a href="#" class="nav-link" data-page="opcua">
+                    <i class="fa-solid fa-globe"></i>
+                    <span>OPC UA</span>
+                </a>
+                <a href="#" class="nav-link" data-page="settings">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-link" data-page="help">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <span>Help</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="footer-logo">
+                    <span class="logo-emoji">😊</span>
+                    <div class="footer-text">
+                        <strong>Big GiantBaby 👍</strong>
+                        <small>v1.0.0 © 2025</small>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <span class="status-dot online"></span>
+                    <span>System Online</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <h2 id="page-title">Dashboard</h2>
+                <div class="actions">
+                    <button class="btn btn-icon"><i class="fa-regular fa-bell"></i></button>
+                </div>
+            </header>
+
+            <div id="content-area" class="content-area">
+                <!-- Dashboard View -->
+                <div id="view-dashboard" class="view active">
+                    <div class="stats-grid">
+                        <div class="card stat-card">
+                            <div class="stat-icon color-blue"><i class="fa-solid fa-server"></i></div>
+                            <div class="stat-info">
+                                <h3>IEDs</h3>
+                                <p class="stat-value" id="stat-ied-count">0</p>
+                                <p class="stat-label">Connected</p>
+                            </div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-icon color-green"><i class="fa-solid fa-network-wired"></i></div>
+                            <div class="stat-info">
+                                <h3>GOOSE</h3>
+                                <p class="stat-value" id="stat-goose-rate">0</p>
+                                <p class="stat-label">Msg/sec</p>
+                            </div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-icon color-purple"><i class="fa-solid fa-globe"></i></div>
+                            <div class="stat-info">
+                                <h3>OPC UA</h3>
+                                <p class="stat-value" id="stat-opcua-clients">0</p>
+                                <p class="stat-label">Clients</p>
+                            </div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-icon color-orange"><i class="fa-solid fa-microchip"></i></div>
+                            <div class="stat-info">
+                                <h3>CPU</h3>
+                                <p class="stat-value" id="stat-cpu">0%</p>
+                                <p class="stat-label">Usage</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Traffic Overview</h3>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="trafficChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3>Recent Alarms</h3>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="alarm-list" id="alarm-list">
+                                        <!-- Alarms will be injected here -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IED Management View -->
+                <div id="view-ieds" class="view">
+                    <div class="card">
+                        <div class="card-header flex-between">
+                            <h3>Configured IEDs</h3>
+                            <button class="btn btn-primary" onclick="openModal('modal-add-ied')">
+                                <i class="fa-solid fa-plus"></i> Add IED
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>IP Address</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ied-table-body">
+                                    <!-- IED rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GOOSE View -->
+                <div id="view-goose" class="view">
+                    <!-- Network Health Cards -->
+                    <div class="network-health-container">
+                        <div class="network-card network-a">
+                            <div class="network-header">
+                                <h3 class="network-title" data-i18n="goose.network.a">Network A (eth0)</h3>
+                                <div class="network-status">
+                                    <span class="status-dot online"></span>
+                                    <span data-i18n="goose.online">Online</span>
+                                </div>
+                            </div>
+                            <div class="network-metrics">
+                                <div class="metric-item">
+                                    <span class="metric-label" data-i18n="goose.rate">Message Rate</span>
+                                    <span class="metric-value success" id="net-a-rate">1234 msg/s</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label" data-i18n="goose.errors">Errors</span>
+                                    <span class="metric-value success" id="net-a-errors">0</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label" data-i18n="goose.quality">Quality</span>
+                                    <span class="metric-value success" id="net-a-quality">99.8%</span>
+                                </div>
+                                <div class="quality-bar">
+                                    <div class="quality-fill high" style="width: 99.8%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="network-card network-b">
+                            <div class="network-header">
+                                <h3 class="network-title" data-i18n="goose.network.b">Network B (eth1)</h3>
+                                <div class="network-status">
+                                    <span class="status-dot online"></span>
+                                    <span data-i18n="goose.online">Online</span>
+                                </div>
+                            </div>
+                            <div class="network-metrics">
+                                <div class="metric-item">
+                                    <span class="metric-label" data-i18n="goose.rate">Message Rate</span>
+                                    <span class="metric-value success" id="net-b-rate">1230 msg/s</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label" data-i18n="goose.errors">Errors</span>
+                                    <span class="metric-value warning" id="net-b-errors">2</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label" data-i18n="goose.quality">Quality</span>
+                                    <span class="metric-value success" id="net-b-quality">99.5%</span>
+                                </div>
+                                <div class="quality-bar">
+                                    <div class="quality-fill high" style="width: 99.5%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Network Topology SVG -->
+                    <div class="card">
+                        <div class="card-header flex-between">
+                            <h3 data-i18n="goose.topology">Network Topology</h3>
+                            <span class="badge badge-info" id="topology-type-badge">Loading...</span>
+                        </div>
+                        <div class="card-body" style="padding: 0;">
+                            <div id="goose-topology-container"></div>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="card stat-card">
+                            <div class="stat-icon color-green"><i class="fa-solid fa-signal"></i></div>
+                            <div class="stat-info">
+                                <h3 data-i18n="goose.active">Active Subscriptions</h3>
+                                <p class="stat-value" id="goose-subs-count">0</p>
+                                <p class="stat-label" data-i18n="goose.subscriptions">Subscriptions</p>
+                            </div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-icon color-blue"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="stat-info">
+                                <h3 data-i18n="goose.messages">Messages</h3>
+                                <p class="stat-value" id="goose-msg-count">0</p>
+                                <p class="stat-label" data-i18n="goose.total">Total Received</p>
+                            </div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-icon color-purple"><i class="fa-solid fa-gauge-high"></i></div>
+                            <div class="stat-info">
+                                <h3 data-i18n="goose.rate">Message Rate</h3>
+                                <p class="stat-value" id="goose-rate">0</p>
+                                <p class="stat-label" data-i18n="goose.persec">msg/sec</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card">
+                                <div class="card-header flex-between">
+                                    <h3 data-i18n="goose.subscriptions.title">GOOSE Subscriptions</h3>
+                                    <button class="btn btn-primary" onclick="openModal('modal-add-goose')">
+                                        <i class="fa-solid fa-plus"></i> <span data-i18n="goose.add">Add
+                                            Subscription</span>
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th data-i18n="goose.gocbref">GoCB Reference</th>
+                                                <th data-i18n="goose.dataset">Dataset</th>
+                                                <th data-i18n="goose.status">Status</th>
+                                                <th data-i18n="goose.lastmsg">Last Message</th>
+                                                <th data-i18n="goose.actions">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="goose-table-body">
+                                            <!-- Sample row -->
+                                            <tr>
+                                                <td><code>IED1/LLN0$GO$gcbAnalog</code></td>
+                                                <td>IED1/LLN0$DS1</td>
+                                                <td><span class="badge badge-success">Active</span></td>
+                                                <td>2s ago</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-secondary"><i
+                                                            class="fa-solid fa-pause"></i></button>
+                                                    <button class="btn btn-sm btn-secondary"><i
+                                                            class="fa-solid fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 data-i18n="goose.recent">Recent Messages</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="goose-log" id="goose-log">
+                                        <div class="log-entry">
+                                            <div class="log-time">11:05:32</div>
+                                            <div class="log-ref">IED1/LLN0$GO$gcbAnalog</div>
+                                            <div class="log-detail">stNum: 125, sqNum: 3456</div>
+                                        </div>
+                                        <div class="log-entry">
+                                            <div class="log-time">11:05:31</div>
+                                            <div class="log-ref">IED2/LLN0$GO$gcbStatus</div>
+                                            <div class="log-detail">stNum: 45, sqNum: 890</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OPC UA View -->
+                <div id="view-opcua" class="view">
+                    <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="card stat-card">
+                            <div class="stat-icon color-blue"><i class="fa-solid fa-server"></i></div>
+                            <div class="stat-info">
+                                <h3 data-i18n="opcua.server.status">Server Status</h3>
+                                <p class="stat-value"><span class="badge badge-success">Running</span></p>
+                                <p class="stat-label" data-i18n="opcua.uptime">Uptime: 2h 34m</p>
+                            </div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-icon color-green"><i class="fa-solid fa-users"></i></div>
+                            <div class="stat-info">
+                                <h3 data-i18n="opcua.clients">Clients</h3>
+                                <p class="stat-value" id="opcua-clients">0</p>
+                                <p class="stat-label" data-i18n="opcua.connected">Connected</p>
+                            </div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-icon color-purple"><i class="fa-solid fa-folder-tree"></i></div>
+                            <div class="stat-info">
+                                <h3 data-i18n="opcua.nodes">Nodes</h3>
+                                <p class="stat-value" id="opcua-nodes">0</p>
+                                <p class="stat-label" data-i18n="opcua.addressspace">Address Space</p>
+                            </div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-icon color-orange"><i class="fa-solid fa-bell"></i></div>
+                            <div class="stat-info">
+                                <h3 data-i18n="opcua.subscriptions">Subscriptions</h3>
+                                <p class="stat-value" id="opcua-subs">0</p>
+                                <p class="stat-label" data-i18n="opcua.active">Active</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Server Configuration -->
+                    <div class="settings-grid">
+                        <div class="card settings-card">
+                            <div class="card-header">
+                                <div class="header-icon"><i class="fa-solid fa-sliders"></i></div>
+                                <div>
+                                    <h3 data-i18n="opcua.config">Server Configuration</h3>
+                                    <p class="card-subtitle" data-i18n="opcua.config.subtitle">OPC UA server network and
+                                        security settings</p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form id="opcua-config-form">
+                                    <div class="form-group">
+                                        <label data-i18n="opcua.port">Server Port</label>
+                                        <input type="number" class="form-control" name="opcuaPort" value="4840">
+                                    </div>
+                                    <div class="form-group">
+                                        <label data-i18n="opcua.endpoint">Endpoint URL</label>
+                                        <input type="text" class="form-control" name="endpoint"
+                                            value="opc.tcp://localhost:4840" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label data-i18n="opcua.security">Security Policy</label>
+                                        <select class="form-control" name="securityPolicy">
+                                            <option value="none">None</option>
+                                            <option value="basic128rsa15">Basic128Rsa15</option>
+                                            <option value="basic256">Basic256</option>
+                                            <option value="basic256sha256" selected>Basic256Sha256</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="toggle-group">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" name="anonymous" checked>
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <span data-i18n="opcua.anonymous">Allow Anonymous Access</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-secondary">
+                                            <i class="fa-solid fa-rotate-right"></i> <span
+                                                data-i18n="opcua.restart">Restart Server</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa-solid fa-save"></i> <span data-i18n="button.save">Save</span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card settings-card">
+                            <div class="card-header">
+                                <div class="header-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                                <div>
+                                    <h3 data-i18n="opcua.certificates">Certificates</h3>
+                                    <p class="card-subtitle" data-i18n="opcua.certificates.subtitle">Server certificates
+                                        and trusted certificate list</p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="cert-info">
+                                    <div class="cert-item">
+                                        <i class="fa-solid fa-certificate"></i>
+                                        <div>
+                                            <strong data-i18n="opcua.cert.server">Server Certificate</strong>
+                                            <p class="text-muted">CN=IEC61850Gateway, Valid until: 2026-11-22</p>
+                                        </div>
+                                    </div>
+                                    <div class="cert-actions">
+                                        <button class="btn btn-secondary btn-block">
+                                            <i class="fa-solid fa-download"></i> <span
+                                                data-i18n="opcua.cert.export">Export Certificate</span>
+                                        </button>
+                                        <button class="btn btn-secondary btn-block">
+                                            <i class="fa-solid fa-plus"></i> <span data-i18n="opcua.cert.trust">Add
+                                                Trusted Certificate</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Connected Clients -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 data-i18n="opcua.clients.title">Connected Clients</h3>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th data-i18n="opcua.client.endpoint">Endpoint</th>
+                                        <th data-i18n="opcua.client.user">User</th>
+                                        <th data-i18n="opcua.client.security">Security Mode</th>
+                                        <th data-i18n="opcua.client.connected">Connected At</th>
+                                        <th data-i18n="opcua.client.actions">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="opcua-clients-table">
+                                    <!-- Client rows will be inserted here -->
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted" data-i18n="opcua.noclients">No
+                                            clients connected</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MMS Test View -->
+                <div id="view-mms" class="view">
+                    <!-- Connection Status -->
+                    <div class="stats-grid">
+                        <div class="card stat-card">
+                            <div class="stat-icon color-blue"><i class="fa-solid fa-server"></i></div>
+                            <div class="stat-info">
+                                <h3>IED Status</h3>
+                                <p class="stat-value" id="mms-ied-status">Disconnected</p>
+                                <p class="stat-label" id="mms-ied-name">-</p>
+                            </div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-icon color-green"><i class="fa-solid fa-database"></i></div>
+                            <div class="stat-info">
+                                <h3>Data Objects</h3>
+                                <p class="stat-value" id="mms-data-count">0</p>
+                                <p class="stat-label">Available</p>
+                            </div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-icon color-purple"><i class="fa-solid fa-clock"></i></div>
+                            <div class="stat-info">
+                                <h3>Last Read</h3>
+                                <p class="stat-value" id="mms-last-read">Never</p>
+                                <p class="stat-label">Timestamp</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 1: Connection + Data Browser -->
+                    <div class="row row-2col">
+                        <!-- IED Connection -->
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3><i class="fa-solid fa-link"></i> IED Connection</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Select IED</label>
+                                        <select class="form-control" id="mms-ied-select">
+                                            <option value="">Loading...</option>
+                                        </select>
+                                    </div>
+
+                                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                                        <button class="btn btn-primary btn-sm" id="mms-connect-btn" style="flex: 1;">
+                                            <i class="fa-solid fa-plug"></i> Connect
+                                        </button>
+                                        <button class="btn btn-secondary btn-sm" id="mms-disconnect-btn" disabled
+                                            style="flex: 1;">
+                                            <i class="fa-solid fa-plug-circle-xmark"></i> Disconnect
+                                        </button>
+                                    </div>
+
+                                    <div id="mms-export-group" style="display: none; margin-bottom: 1rem;">
+                                        <div style="display: flex; gap: 0.5rem;">
+                                            <button class="btn btn-outline-info btn-sm" id="mms-export-icd"
+                                                style="flex: 1;">
+                                                <i class="fa-solid fa-file-code"></i> ICD
+                                            </button>
+                                            <button class="btn btn-outline-primary btn-sm" id="mms-export-cid"
+                                                style="flex: 1;">
+                                                <i class="fa-solid fa-file-export"></i> CID
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div id="mms-connection-log" class="connection-log" style="display: none;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data Model Browser -->
+                        <div class="col-8">
+                            <div class="card">
+                                <div class="card-header flex-between">
+                                    <h3><i class="fa-solid fa-folder-tree"></i> Data Model Browser</h3>
+                                    <button class="btn btn-secondary btn-sm" id="mms-browse-btn">
+                                        <i class="fa-solid fa-rotate"></i> Refresh
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div id="mms-data-tree"
+                                                style="max-height: 350px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 4px;">
+                                                <div class="text-muted text-center">Connect to an IED to browse data
+                                                    model</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                            <div id="mms-realtime-data" style="max-height: 350px; overflow-y: auto;">
+                                                <div id="mms-values-container" class="text-muted text-center">
+                                                    Select a data object from the tree to view its value
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Read + Write + Subscribe -->
+                    <div class="row">
+                        <!-- Quick Read -->
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3><i class="fa-solid fa-book-open"></i> Quick Read</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Data Reference</label>
+                                        <input type="text" class="form-control form-control-sm" id="mms-read-ref"
+                                            placeholder="e.g., simpleIOGenericIO/GGIO1$MX$AnIn1"
+                                            style="font-family: monospace; font-size: 11px;">
+                                        <small class="text-muted">LD/LN$FC$DO</small>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button class="btn btn-primary btn-sm w-100" id="mms-read-btn">
+                                            <i class="fa-solid fa-download"></i> Read
+                                        </button>
+                                    </div>
+                                    <div id="mms-read-result" class="read-result"
+                                        style="display: none; font-size: 11px; color: var(--text-muted); margin-top: 0.75rem;">
+                                        <div><strong>Value:</strong> <span id="mms-read-value">-</span></div>
+                                        <div><strong>Type:</strong> <span id="mms-read-type">-</span></div>
+                                        <div><strong>Quality:</strong> <span id="mms-read-quality">-</span></div>
+                                        <div><strong>Time:</strong> <span id="mms-read-timestamp">-</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Write Control -->
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3><i class="fa-solid fa-pen-to-square"></i> Write Control</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Control Ref</label>
+                                        <input type="text" class="form-control form-control-sm" id="mms-write-ref"
+                                            placeholder="e.g., simpleIOGenericIO/GGIO1.SPCSO1"
+                                            style="font-size: 11px; font-family: monospace;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Type</label>
+                                        <select class="form-control form-control-sm" id="mms-write-type">
+                                            <option value="boolean">Boolean</option>
+                                            <option value="int">Integer</option>
+                                            <option value="float">Float</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="mms-write-boolean-group">
+                                        <label>Value</label>
+                                        <div class="btn-group btn-group-toggle w-100">
+                                            <button class="btn btn-outline-success btn-sm" id="mms-write-on">ON</button>
+                                            <button class="btn btn-outline-danger btn-sm"
+                                                id="mms-write-off">OFF</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="mms-write-value-group" style="display: none;">
+                                        <label>Value</label>
+                                        <input type="text" class="form-control form-control-sm" id="mms-write-value"
+                                            placeholder="Enter value">
+                                    </div>
+                                    <div class="form-actions">
+                                        <button class="btn btn-warning btn-sm w-100" id="mms-write-btn">
+                                            <i class="fa-solid fa-paper-plane"></i> Send
+                                        </button>
+                                    </div>
+                                    <div id="mms-write-result" class="mt-2" style="display: none;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Report Subscriptions -->
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3><i class="fa-solid fa-bell"></i> Report Subscriptions</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Report Control Block (RCB)</label>
+                                        <select class="form-control form-control-sm" id="mms-rcb-select">
+                                            <option value="">Select RCB...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button class="btn btn-primary btn-sm" id="mms-subscribe-btn">
+                                            <i class="fa-solid fa-rss"></i> Subscribe
+                                        </button>
+                                        <button class="btn btn-secondary btn-sm" id="mms-unsubscribe-btn" disabled>
+                                            <i class="fa-solid fa-stop"></i> Stop
+                                        </button>
+                                    </div>
+                                    <div id="mms-report-log">
+                                        <div style="color: #888;">No active subscriptions</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings View -->
+                <div id="view-settings" class="view">
+                    <div class="settings-grid">
+                        <!-- System Configuration Card -->
+                        <div class="card settings-card">
+                            <div class="card-header">
+                                <div class="header-icon">
+                                    <i class="fa-solid fa-sliders"></i>
+                                </div>
+                                <div>
+                                    <h3>System Configuration</h3>
+                                    <p class="card-subtitle">Gateway identity and logging settings</p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form id="system-form">
+                                    <div class="form-group">
+                                        <label>Gateway Name</label>
+                                        <input type="text" class="form-control" name="gatewayName"
+                                            value="IEC61850-Gateway-01">
+                                    </div>
+                                    <div class="form-group">
+                                        <label data-i18n="settings.language">Language / 语言 / 言語</label>
+                                        <select class="form-control" name="language" id="language-select">
+                                            <option value="en">English</option>
+                                            <option value="zh">简体中文</option>
+                                            <option value="ja">日本語</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Log Level</label>
+                                        <select class="form-control" name="logLevel">
+                                            <option value="info">Info</option>
+                                            <option value="debug">Debug</option>
+                                            <option value="warn">Warning</option>
+                                            <option value="error">Error</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa-solid fa-save"></i> Save
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Configuration Management Card -->
+                        <div class="card settings-card">
+                            <div class="card-header">
+                                <div class="header-icon">
+                                    <i class="fa-solid fa-file-import"></i>
+                                </div>
+                                <div>
+                                    <h3 data-i18n="config.title">Configuration Management</h3>
+                                    <p class="card-subtitle" data-i18n="config.subtitle">Import/Export SCD and gateway
+                                        configuration files</p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- Upload Section -->
+                                <div class="config-section">
+                                    <h4 data-i18n="config.upload">Upload Configuration</h4>
+
+                                    <div class="form-group">
+                                        <label data-i18n="config.upload.scd">
+                                            <i class="fa-solid fa-file-code"></i> Upload SCD File (.scd)
+                                        </label>
+                                        <input type="file" id="scd-upload" class="form-control" accept=".scd,.xml" />
+                                        <small class="text-muted" data-i18n="config.upload.scd.hint">
+                                            IEC 61850 Substation Configuration Description file
+                                        </small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label data-i18n="config.upload.yaml">
+                                            <i class="fa-solid fa-file-lines"></i> Upload Gateway Config (.yaml)
+                                        </label>
+                                        <input type="file" id="yaml-upload" class="form-control" accept=".yaml,.yml" />
+                                        <small class="text-muted" data-i18n="config.upload.yaml.hint">
+                                            Gateway configuration file
+                                        </small>
+                                    </div>
+
+                                    <div class="upload-progress" id="upload-progress" style="display: none;">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" id="progress-fill"></div>
+                                        </div>
+                                        <span class="progress-text" id="progress-text">Uploading... 0%</span>
+                                    </div>
+                                </div>
+
+                                <!-- Available SCD Files -->
+                                <div class="config-section">
+                                    <h4 data-i18n="config.available">Available SCD Files</h4>
+                                    <div class="file-list" id="scd-file-list">
+                                        <div class="file-item">
+                                            <input type="radio" name="active-scd" id="scd-default" value="station.scd"
+                                                checked>
+                                            <label for="scd-default">
+                                                <i class="fa-solid fa-file"></i>
+                                                <span class="file-name">station.scd</span>
+                                                <span class="badge badge-success">Active</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-secondary btn-sm" id="refresh-scd-list">
+                                        <i class="fa-solid fa-rotate"></i> <span data-i18n="config.refresh">Refresh
+                                            List</span>
+                                    </button>
+                                </div>
+
+                                <!-- Actions -->
+                                <div class="form-actions">
+                                    <button class="btn btn-secondary" id="download-scd">
+                                        <i class="fa-solid fa-download"></i> <span
+                                            data-i18n="config.download.scd">Download Active
+                                            SCD</span>
+                                    </button>
+                                    <button class="btn btn-secondary" id="download-yaml">
+                                        <i class="fa-solid fa-download"></i> <span
+                                            data-i18n="config.download.yaml">Download Gateway
+                                            Config</span>
+                                    </button>
+                                    <button class="btn btn-primary" id="apply-config">
+                                        <i class="fa-solid fa-check"></i> <span data-i18n="config.apply">Apply &
+                                            Reload</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- API & WebSocket Card -->
+                        <div class="card settings-card">
+                            <div class="card-header">
+                                <div class="header-icon">
+                                    <i class="fa-solid fa-plug"></i>
+                                </div>
+                                <div>
+                                    <h3>API & WebSocket</h3>
+                                    <p class="card-subtitle">REST API and real-time updates configuration</p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form id="api-form">
+                                    <div class="form-group">
+                                        <label>API Port <span class="badge badge-warning">Requires
+                                                Restart</span></label>
+                                        <input type="number" class="form-control" name="apiPort" value="6850">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>WebSocket Update Interval (ms)</label>
+                                        <input type="number" class="form-control" name="wsInterval" value="1000"
+                                            min="100" max="10000">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="toggle-group">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" name="apiEnable" checked>
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <span>Enable REST API</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="toggle-group">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" name="wsEnable" checked>
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                            <span>Enable WebSocket Updates</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa-solid fa-save"></i> Save
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Database Card -->
+                        <div class="card settings-card full-width">
+                            <div class="card-header">
+                                <div class="header-icon">
+                                    <i class="fa-solid fa-database"></i>
+                                </div>
+                                <div>
+                                    <h3>Historical Database</h3>
+                                    <p class="card-subtitle">Time-series data storage configuration</p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form id="database-form">
+                                    <div class="form-group">
+                                        <label>Storage Type</label>
+                                        <select class="form-control" name="storageType" id="storageTypeSelect">
+                                            <option value="influxdb">InfluxDB</option>
+                                            <option value="timescaledb">TimescaleDB</option>
+                                        </select>
+                                    </div>
+                                    <!-- InfluxDB Fields -->
+                                    <div id="influxdb-fields" class="db-fields">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>InfluxDB URL</label>
+                                                <input type="text" class="form-control" name="influxUrl"
+                                                    value="http://localhost:8086">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Organization</label>
+                                                <input type="text" class="form-control" name="influxOrg" value="my-org">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>Bucket</label>
+                                                <input type="text" class="form-control" name="influxBucket"
+                                                    value="iec61850_data">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Auth Token</label>
+                                                <input type="password" class="form-control" name="influxToken"
+                                                    placeholder="Enter token">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- TimescaleDB Fields -->
+                                    <div id="timescaledb-fields" class="db-fields" style="display: none;">
+                                        <div class="form-group">
+                                            <label>Connection String</label>
+                                            <input type="text" class="form-control" name="timescaleConn"
+                                                value="postgresql://user:password@localhost:5432/iec61850">
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-secondary">
+                                            <i class="fa-solid fa-flask"></i> Test Connection
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa-solid fa-save"></i> Save
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Help View -->
+                <div id="help-view" class="view">
+                    <div class="header">
+                        <h1>Help & Documentation</h1>
+                    </div>
+                    <div class="grid-container">
+                        <div class="card">
+                            <h2>Getting Started</h2>
+                            <p>Welcome to the IEC61850 to OPC UA Gateway! Here's how to get started:</p>
+                            <ol class="help-list">
+                                <li><strong>Configure IEDs:</strong> Go to the "IED Management" tab to add your IEC
+                                    61850 devices. You'll need their IP addresses.</li>
+                                <li><strong>Import SCL:</strong> If you have `.scd` or `.icd` files, use the Import
+                                    feature to automatically configure data points.</li>
+                                <li><strong>Set Up OPC UA:</strong> Check the "OPC UA" tab to configure the server port
+                                    and security settings.</li>
+                                <li><strong>Monitor:</strong> Use the "Dashboard" to see real-time traffic and
+                                    connection status.</li>
+                            </ol>
+                        </div>
+                        <div class="card">
+                            <h2>API Reference</h2>
+                            <p>The Gateway provides a REST API for external integration.</p>
+                            <ul class="help-list">
+                                <li><code>GET /api/v1/status</code> - System status</li>
+                                <li><code>GET /api/v1/ieds</code> - List configured IEDs</li>
+                                <li><code>POST /api/v1/ieds</code> - Add a new IED</li>
+                                <li><code>WS /ws</code> - WebSocket for real-time updates</li>
+                            </ul>
+                            <p><a href="#" class="link">View Full API Documentation &rarr;</a></p>
+                        </div>
+                        <div class="card">
+                            <h2>About</h2>
+                            <p><strong>Version:</strong> 1.0.0</p>
+                            <p><strong>Build:</strong> 2025.11.22</p>
+                            <p><strong>License:</strong> MIT</p>
+                            <div class="logo-small">
+                                <span class="logo-icon">😊</span> Big GiantBaby 👍
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-add-ied" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New IED</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="add-ied-form">
+                    <div class="form-group">
+                        <label>IED Name</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>IP Address</label>
+                        <input type="text" class="form-control" name="ip" required>
+                    </div>
+                    <div class="form-group">
+                        <label>SCL File</label>
+                        <input type="file" class="form-control" name="scl">
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Add Device</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add GOOSE Subscription Modal -->
+    <div id="modal-add-goose" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-i18n="goose.add">Add GOOSE Subscription</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="add-goose-form">
+                    <div class="form-group">
+                        <label data-i18n="goose.gocbref">GoCB Reference</label>
+                        <input type="text" class="form-control" name="gocbref" placeholder="IED1/LLN0$GO$gcbAnalog"
+                            required>
+                        <small class="text-muted">Format: IEDName/LLN0$GO$controlBlockName</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Network Interface</label>
+                        <select class="form-control" name="interface">
+                            <option value="eth0">eth0</option>
+                            <option value="eth1">eth1</option>
+                            <option value="en0" selected>en0 (WiFi)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">
+                        <i class="fa-solid fa-plus"></i> <span data-i18n="goose.add">Add Subscription</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

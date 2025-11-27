@@ -1,4 +1,5 @@
 #include "iec61850/scl/scl_generator.h"
+#include "core/logger.h"
 #include "pugixml.hpp"
 #include <chrono>
 #include <ctime>
@@ -226,65 +227,257 @@ void SCLGenerator::addDataObject(pugi::xml_node &lnNode,
   std::string cdcType = "Unknown";
 
   if (error == IED_ERROR_OK && daList != NULL) {
+    // Status/Measurement attributes
     bool hasMag = false;
+    bool hasInstMag = false;
+    bool hasSetMag = false;
+    bool hasCVal = false;
     bool hasStVal = false;
     bool hasCtlVal = false;
+
+    // Name plate attributes
     bool hasVendor = false;
     bool hasSwRev = false;
     bool hasLdNs = false;
+
+    // Protection attributes
     bool hasGeneral = false;
+    bool hasDirGeneral = false;
+    bool hasStrVal = false;
+    bool hasPhStr = false;
+
+    // Phase attributes
     bool hasPhsA = false;
     bool hasPhsAB = false;
+    bool hasSeqA = false;
+
+    // Setting/Control attributes
+    bool hasActSG = false;
+    bool hasNumOfSG = false;
+    bool hasMinVal = false;
+    bool hasMaxVal = false;
+    bool hasStepSize = false;
+
+    // Counter attributes
+    bool hasActVal = false;
+    bool hasFrVal = false;
+    bool hasFrTm = false;
+
+    // Enumeration/Integer attributes
+    bool hasIntVal = false;
+    bool hasRange = false;
+
+    // Curve/Array attributes
+    bool hasSetCharact = false;
+    bool hasNumPts = false;
+
+    // Originator attributes
+    bool hasOrCat = false;
+    bool hasOrIdent = false;
 
     LinkedList element = LinkedList_getNext(daList);
     while (element != NULL) {
       char *daName = (char *)LinkedList_getData(element);
       std::string name(daName);
 
+      // Analog values
       if (name == "mag")
         hasMag = true;
+      if (name == "instMag")
+        hasInstMag = true;
+      if (name == "setMag")
+        hasSetMag = true;
+      if (name == "cVal")
+        hasCVal = true;
+
+      // Status/Control
       if (name == "stVal")
         hasStVal = true;
       if (name == "Oper" || name == "SBOw")
         hasCtlVal = true;
+
+      // Name Plate
       if (name == "vendor")
         hasVendor = true;
       if (name == "swRev")
         hasSwRev = true;
       if (name == "ldNs")
         hasLdNs = true;
+
+      // Protection
       if (name == "general")
         hasGeneral = true;
+      if (name == "dirGeneral")
+        hasDirGeneral = true;
+      if (name == "strVal")
+        hasStrVal = true;
+      if (name == "phsStr")
+        hasPhStr = true;
+
+      // Phase
       if (name == "phsA")
         hasPhsA = true;
       if (name == "phsAB")
         hasPhsAB = true;
+      if (name == "seqA")
+        hasSeqA = true;
+
+      // Settings
+      if (name == "ActSG" || name == "actSG")
+        hasActSG = true;
+      if (name == "NumOfSG" || name == "numOfSG")
+        hasNumOfSG = true;
+      if (name == "minVal")
+        hasMinVal = true;
+      if (name == "maxVal")
+        hasMaxVal = true;
+      if (name == "stepSize")
+        hasStepSize = true;
+
+      // Counters
+      if (name == "actVal")
+        hasActVal = true;
+      if (name == "frVal")
+        hasFrVal = true;
+      if (name == "frTm")
+        hasFrTm = true;
+
+      // Integer/Enum
+      if (name == "intVal")
+        hasIntVal = true;
+      if (name == "range")
+        hasRange = true;
+
+      // Curve
+      if (name == "setCharact")
+        hasSetCharact = true;
+      if (name == "numPts")
+        hasNumPts = true;
+
+      // Originator
+      if (name == "orCat")
+        hasOrCat = true;
+      if (name == "orIdent")
+        hasOrIdent = true;
 
       element = LinkedList_getNext(element);
     }
     LinkedList_destroy(daList);
 
-    // CDC inference based on characteristic data attributes
-    if (hasCtlVal)
-      cdcType = "SPC"; // Controllable Single Point
-    else if (hasVendor && hasSwRev && hasLdNs)
+    // Debug logging for problematic DOs
+    if (doName == "AnOut1" || doName.find("AnOut") != std::string::npos) {
+      LOG_INFO("DEBUG AnOut attributes - setMag:{} cVal:{} Oper:{} mag:{}",
+               hasSetMag, hasCVal, hasCtlVal, hasMag);
+    }
+
+    // CDC inference - Ordered by specificity
+
+    // Name Plate types (highest priority)
+    if (hasVendor && hasSwRev && hasLdNs)
       cdcType = "LPL"; // Logical Node Name Plate
     else if (hasVendor && hasSwRev)
       cdcType = "DPL"; // Device Name Plate
+
+    // Setting Group Control
+    else if (hasActSG && hasNumOfSG)
+      cdcType = "SPG"; // Setting Group
+
+    // Curve types
+    else if (hasSetCharact && hasNumPts)
+      cdcType = "CURVE"; // Curve Setting
+
+    // Counter types
+    else if (hasActVal && hasFrVal && hasFrTm)
+      cdcType = "BCR"; // Binary Counter Reading
+    else if (hasActVal && hasCtlVal)
+      cdcType = "BSC"; // Binary Controllable Step Position
+    else if (hasActVal && hasMinVal && hasMaxVal)
+      cdcType = "ISC"; // Integer Controllable Step Position
+
+    // Controllable Analog types (HIGHEST PRIORITY for analog!)
+    // Check for cVal first - this is used by AnOut (ASG) and some APC
+    else if (hasCtlVal && hasCVal)
+      cdcType = "APC"; // Controllable Complex Analog (AnOut with control)
+    else if (hasCVal && (hasMinVal || hasMaxVal || hasStepSize))
+      cdcType = "ASG"; // Analog Setting with cVal
+    else if (hasCVal)
+      cdcType = "ASG"; // Analog Setting (AnOut - writable!)
+    // Then check setMag
+    else if (hasCtlVal && hasSetMag)
+      cdcType = "APC"; // Controllable Analog Process Value
+    else if (hasCtlVal && hasMag)
+      cdcType = "APC"; // Controllable Analog Process Value
+    else if (hasSetMag && (hasMinVal || hasMaxVal || hasStepSize))
+      cdcType = "ASG"; // Analog Setting (non-controllable)
+    else if (hasSetMag)
+      cdcType = "ASG"; // Analog Setting (fallback)
+
+    // Controllable Integer/Enum types
+    else if (hasCtlVal && hasIntVal)
+      cdcType = "INC"; // Controllable Integer
+    else if (hasCtlVal && hasRange)
+      cdcType = "ENC"; // Controllable Enumerated
+
+    // Controllable Status types (after analog types!)
+    else if (hasCtlVal && hasStVal && hasDirGeneral)
+      cdcType = "DPC"; // Controllable Double Point with Direction
+    else if (hasCtlVal && hasStVal)
+      cdcType = "SPC"; // Controllable Single Point
+    else if (hasCtlVal)
+      cdcType = "DPC"; // Controllable Double Point (fallback)
+
+    // Non-controllable Setting types
+    else if (hasIntVal && (hasMinVal || hasMaxVal))
+      cdcType = "ING"; // Integer Setting
+    else if (hasRange && (hasMinVal || hasMaxVal))
+      cdcType = "ENG"; // Enumerated Setting
+
+    // Analog Measurement types
+    else if (hasInstMag)
+      cdcType = "SAV"; // Sampled Analog Value (instantaneous)
+    else if (hasCVal && (hasPhsA || hasPhsAB))
+      cdcType = "CMV"; // Complex Measured Value
+    else if (hasCVal)
+      cdcType = "CMV"; // Complex Measured Value
     else if (hasMag)
       cdcType = "MV"; // Measured Value
+
+    // Phase-related Measurement types
+    else if (hasSeqA)
+      cdcType = "SEQ"; // Sequence
     else if (hasPhsA)
       cdcType = "WYE"; // Wye (3-phase)
     else if (hasPhsAB)
       cdcType = "DEL"; // Delta (3-phase)
+
+    // Protection types
+    else if (hasDirGeneral && hasGeneral)
+      cdcType = "ACD"; // Protection Activation with Direction
+    else if (hasDirGeneral)
+      cdcType = "DIR"; // Direction
     else if (hasGeneral)
-      cdcType = "ACT"; // Protection activation
+      cdcType = "ACT"; // Protection Activation
+    else if (hasPhStr)
+      cdcType = "ACT"; // Protection Activation (alternate form)
+
+    // Originator
+    else if (hasOrCat && hasOrIdent)
+      cdcType = "ORG"; // Originator
+
+    // String Status
+    else if (hasStrVal)
+      cdcType = "VSS"; // Visible String Status
+
+    // Status types (fallback - least specific)
+    else if (hasStVal && hasRange)
+      cdcType = "ENS"; // Enumerated Status
+    else if (hasStVal && hasIntVal)
+      cdcType = "INS"; // Integer Status
     else if (hasStVal)
-      cdcType = "SPS"; // Single Point Status (default for stVal)
+      cdcType = "SPS"; // Single Point Status (most generic)
   }
 
   // Add type attribute (reference to DOType in templates)
-  // We'll use a simple convention: CDC + "_Type"
   if (cdcType != "Unknown") {
     doi.append_attribute("type").set_value((cdcType + "_Type").c_str());
   }
@@ -319,6 +512,42 @@ void SCLGenerator::buildDataTypeTemplates(pugi::xml_node &root) {
   mvQ.append_attribute("bType").set_value("Quality");
   mvQ.append_attribute("fc").set_value("MX");
 
+  // SAV - Sampled Analog Value (Temperature, etc.)
+  pugi::xml_node sav = addDOType("SAV_Type", "SAV");
+  pugi::xml_node savInstMag = sav.append_child("DA");
+  savInstMag.append_attribute("name").set_value("instMag");
+  savInstMag.append_attribute("bType").set_value("Struct");
+  savInstMag.append_attribute("fc").set_value("MX");
+  pugi::xml_node savQ = sav.append_child("DA");
+  savQ.append_attribute("name").set_value("q");
+  savQ.append_attribute("bType").set_value("Quality");
+  savQ.append_attribute("fc").set_value("MX");
+
+  // ASG - Analog Setting
+  pugi::xml_node asg = addDOType("ASG_Type", "ASG");
+  pugi::xml_node asgSetMag = asg.append_child("DA");
+  asgSetMag.append_attribute("name").set_value("setMag");
+  asgSetMag.append_attribute("bType").set_value("Struct");
+  asgSetMag.append_attribute("fc").set_value("SP");
+
+  // CMV - Complex Measured Value
+  pugi::xml_node cmv = addDOType("CMV_Type", "CMV");
+  pugi::xml_node cmvCVal = cmv.append_child("DA");
+  cmvCVal.append_attribute("name").set_value("cVal");
+  cmvCVal.append_attribute("bType").set_value("Struct");
+  cmvCVal.append_attribute("fc").set_value("MX");
+
+  // SPG - Setting Group (SGCB)
+  pugi::xml_node spg = addDOType("SPG_Type", "SPG");
+  pugi::xml_node spgActSG = spg.append_child("DA");
+  spgActSG.append_attribute("name").set_value("ActSG");
+  spgActSG.append_attribute("bType").set_value("INT8");
+  spgActSG.append_attribute("fc").set_value("SP");
+  pugi::xml_node spgNumOfSG = spg.append_child("DA");
+  spgNumOfSG.append_attribute("name").set_value("NumOfSG");
+  spgNumOfSG.append_attribute("bType").set_value("INT8U");
+  spgNumOfSG.append_attribute("fc").set_value("CF");
+
   // SPC - Controllable Single Point
   pugi::xml_node spc = addDOType("SPC_Type", "SPC");
   pugi::xml_node spcVal = spc.append_child("DA");
@@ -329,6 +558,17 @@ void SCLGenerator::buildDataTypeTemplates(pugi::xml_node &root) {
   spcOper.append_attribute("name").set_value("Oper");
   spcOper.append_attribute("bType").set_value("Struct");
   spcOper.append_attribute("fc").set_value("CO");
+
+  // DPC - Controllable Double Point
+  pugi::xml_node dpc = addDOType("DPC_Type", "DPC");
+  pugi::xml_node dpcVal = dpc.append_child("DA");
+  dpcVal.append_attribute("name").set_value("stVal");
+  dpcVal.append_attribute("bType").set_value("Dbpos");
+  dpcVal.append_attribute("fc").set_value("ST");
+  pugi::xml_node dpcOper = dpc.append_child("DA");
+  dpcOper.append_attribute("name").set_value("Oper");
+  dpcOper.append_attribute("bType").set_value("Struct");
+  dpcOper.append_attribute("fc").set_value("CO");
 
   // DPL - Device Name Plate (PhyNam)
   pugi::xml_node dpl = addDOType("DPL_1_PhyNam", "DPL");

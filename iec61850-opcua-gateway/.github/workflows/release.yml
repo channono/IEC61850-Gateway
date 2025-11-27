@@ -1,4 +1,4 @@
-name: Release Build
+name: Multi-Platform Release Build
 
 on:
   push:
@@ -12,7 +12,187 @@ on:
         default: 'dev'
 
 jobs:
-  build-cross-platform:
+  # ============================================================
+  # Linux x86-64 Build
+  # ============================================================
+  build-linux-x86_64:
+    runs-on: ubuntu-22.04
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      
+      - name: Set version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build build-essential \
+            libssl-dev python3
+      
+      - name: Build libiec61850
+        run: |
+          cd deps/libiec61850
+          mkdir -p build && cd build
+          cmake -G Ninja \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DBUILD_EXAMPLES=OFF \
+                -DBUILD_TESTS=OFF \
+                ..
+          ninja
+          sudo ninja install
+      
+      - name: Build other dependencies
+        run: |
+          # Install spdlog, yaml-cpp, open62541, etc.
+          sudo apt-get install -y libspdlog-dev libyaml-cpp-dev
+      
+      - name: Build Gateway
+        run: |
+          mkdir -p build-linux-x86 && cd build-linux-x86
+          cmake -G Ninja \
+                -DCMAKE_BUILD_TYPE=Release \
+                ..
+          ninja
+      
+      - name: Package
+        run: |
+          ./scripts/package.sh linux-x86_64 ${{ steps.version.outputs.VERSION }}
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gateway-${{ steps.version.outputs.VERSION }}-linux-x86_64
+          path: release/gateway-${{ steps.version.outputs.VERSION }}-linux-x86_64.zip
+
+  # ============================================================
+  # Linux arm64/aarch64 Build (using Docker for cross-compilation)
+  # ============================================================
+  build-linux-aarch64:
+    runs-on: ubuntu-22.04
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      
+      - name: Set version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build in arm64 container
+        run: |
+          docker run --rm --platform linux/arm64 \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            arm64v8/ubuntu:22.04 \
+            bash -c "
+              apt-get update && \
+              apt-get install -y cmake ninja-build build-essential \
+                libssl-dev python3 libspdlog-dev libyaml-cpp-dev zip && \
+              cd deps/libiec61850 && \
+              mkdir -p build && cd build && \
+              cmake -G Ninja -DCMAKE_BUILD_TYPE=Release \
+                -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF .. && \
+              ninja && ninja install && \
+              cd /workspace && \
+              mkdir -p build-linux-arm64 && cd build-linux-arm64 && \
+              cmake -G Ninja -DCMAKE_BUILD_TYPE=Release .. && \
+              ninja && \
+              cd /workspace && \
+              ./scripts/package.sh linux-aarch64 ${{ steps.version.outputs.VERSION }}
+            "
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gateway-${{ steps.version.outputs.VERSION }}-linux-aarch64
+          path: release/gateway-${{ steps.version.outputs.VERSION }}-linux-aarch64.zip
+
+  # ============================================================
+  # macOS Apple Silicon (M1/M2/M3/M4) Build
+  # ============================================================
+  build-macos-arm64:
+    runs-on: macos-14  # macOS 14 runs on M1 runners by default
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      
+      - name: Set version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Install dependencies
+        run: |
+          brew install cmake ninja
+      
+      - name: Build libiec61850
+        run: |
+          cd deps/libiec61850
+          mkdir -p build && cd build
+          cmake -G Ninja \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_OSX_ARCHITECTURES=arm64 \
+                -DBUILD_EXAMPLES=OFF \
+                -DBUILD_TESTS=OFF \
+                ..
+          ninja
+          sudo ninja install
+      
+      - name: Build Gateway
+        run: |
+          mkdir -p build-macos-arm64 && cd build-macos-arm64
+          cmake -G Ninja \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_OSX_ARCHITECTURES=arm64 \
+                ..
+          ninja
+      
+      - name: Package
+        run: |
+          ./scripts/package.sh macos-arm64 ${{ steps.version.outputs.VERSION }}
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gateway-${{ steps.version.outputs.VERSION }}-macos-arm64
+          path: release/gateway-${{ steps.version.outputs.VERSION }}-macos-arm64.zip
+
+  # ============================================================
+  # Windows x64 Build (cross-compile from macOS)
+  # ============================================================
+  build-windows-x64:
     runs-on: macos-latest
     
     steps:
@@ -34,19 +214,7 @@ jobs:
         run: |
           brew install cmake ninja mingw-w64
       
-      - name: Build libiec61850 for macOS
-        run: |
-          cd deps/libiec61850
-          mkdir -p build-macos && cd build-macos
-          cmake -G Ninja \
-                -DCMAKE_BUILD_TYPE=Release \
-                -DBUILD_EXAMPLES=OFF \
-                -DBUILD_TESTS=OFF \
-                ..
-          ninja
-          sudo ninja install
-      
-      - name: Build libiec61850 for Windows (cross-compile)
+      - name: Build libiec61850 for Windows
         run: |
           cd deps/libiec61850
           mkdir -p build-windows && cd build-windows
@@ -58,15 +226,7 @@ jobs:
                 ..
           ninja
       
-      - name: Build Gateway for macOS
-        run: |
-          mkdir -p build && cd build
-          cmake -G Ninja \
-                -DCMAKE_BUILD_TYPE=Release \
-                ..
-          ninja
-      
-      - name: Build Gateway for Windows (cross-compile)
+      - name: Build Gateway for Windows
         run: |
           mkdir -p build-windows && cd build-windows
           cmake -G Ninja \
@@ -75,34 +235,66 @@ jobs:
                 ..
           ninja
       
-      - name: Package macOS
+      - name: Package
         run: |
-          ./scripts/package.sh macos ${{ steps.version.outputs.VERSION }}
+          ./scripts/package.sh windows-x64 ${{ steps.version.outputs.VERSION }}
       
-      - name: Package Windows
-        run: |
-          ./scripts/package.sh windows ${{ steps.version.outputs.VERSION }}
-      
-      - name: Upload macOS artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: gateway-${{ steps.version.outputs.VERSION }}-macos
-          path: release/gateway-${{ steps.version.outputs.VERSION }}-macos.zip
+          name: gateway-${{ steps.version.outputs.VERSION }}-windows-x64
+          path: release/gateway-${{ steps.version.outputs.VERSION }}-windows-x64.zip
+
+  # ============================================================
+  # Create GitHub Release
+  # ============================================================
+  create-release:
+    needs: [build-linux-x86_64, build-linux-aarch64, build-macos-arm64, build-windows-x64]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    
+    steps:
+      - name: Set version
+        id: version
+        run: |
+          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       
-      - name: Upload Windows artifact
-        uses: actions/upload-artifact@v4
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
         with:
-          name: gateway-${{ steps.version.outputs.VERSION }}-windows
-          path: release/gateway-${{ steps.version.outputs.VERSION }}-windows.zip
+          path: artifacts
+      
+      - name: Display artifact structure
+        run: ls -R artifacts
+      
+      - name: Prepare release files
+        run: |
+          mkdir -p release
+          find artifacts -name "*.zip" -exec cp {} release/ \;
+          ls -lh release/
       
       - name: Create Release
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            release/gateway-${{ steps.version.outputs.VERSION }}-macos.zip
-            release/gateway-${{ steps.version.outputs.VERSION }}-windows.zip
+          files: release/*.zip
           draft: false
           prerelease: false
+          body: |
+            ## IEC61850 OPC UA Gateway ${{ steps.version.outputs.VERSION }}
+            
+            ### Supported Platforms
+            - **Linux x86-64**: Standard 64-bit Linux (Ubuntu, Debian, RHEL, etc.)
+            - **Linux aarch64** (arm64): ARM-based Linux systems
+            - **macOS Apple Silicon** (arm64): M1, M2, M3, M4 chips
+            - **Windows x64**: 64-bit Windows systems
+            
+            ### Download
+            Choose the appropriate package for your platform and extract it.
+            
+            ### Quick Start
+            ```bash
+            ./iec61850-opcua-gateway
+            # Open browser to http://localhost:6850
+            ```
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

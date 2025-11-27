@@ -15,20 +15,61 @@ VERSION=${2:-$(git describe --tags --always 2>/dev/null || echo "dev")}
 # Platform detection (can be overridden as first argument for cross-compilation)
 if [ -n "$1" ]; then
     PLATFORM="$1"
-    if [ "$PLATFORM" = "windows" ]; then
-        EXECUTABLE="iec61850-opcua-gateway.exe"
-        BUILD_DIR="$PROJECT_DIR/build-windows"
-    else
-        EXECUTABLE="iec61850-opcua-gateway"
-    fi
+    case "$PLATFORM" in
+        windows|windows-x64)
+            EXECUTABLE="iec61850-opcua-gateway.exe"
+            BUILD_DIR="$PROJECT_DIR/build-windows"
+            PLATFORM="windows-x64"
+            ;;
+        linux-x86_64|linux-x86)
+            EXECUTABLE="iec61850-opcua-gateway"
+            BUILD_DIR="$PROJECT_DIR/build-linux-x86"
+            PLATFORM="linux-x86_64"
+            ;;
+        linux-aarch64|linux-arm64)
+            EXECUTABLE="iec61850-opcua-gateway"
+            BUILD_DIR="$PROJECT_DIR/build-linux-arm64"
+            PLATFORM="linux-aarch64"
+            ;;
+        macos-arm64)
+            EXECUTABLE="iec61850-opcua-gateway"
+            BUILD_DIR="$PROJECT_DIR/build-macos-arm64"
+            PLATFORM="macos-arm64"
+            ;;
+        macos|macos-universal)
+            EXECUTABLE="iec61850-opcua-gateway"
+            BUILD_DIR="$PROJECT_DIR/build"
+            PLATFORM="macos-universal"
+            ;;
+        *)
+            echo "Error: Unknown platform '$PLATFORM'"
+            echo "Supported platforms: windows-x64, linux-x86_64, linux-aarch64, macos-arm64, macos-universal"
+            exit 1
+            ;;
+    esac
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    PLATFORM="macos"
+    # Auto-detect macOS architecture
+    if [[ $(uname -m) == "arm64" ]]; then
+        PLATFORM="macos-arm64"
+        BUILD_DIR="$PROJECT_DIR/build-macos-arm64"
+    else
+        PLATFORM="macos-x86_64"
+        BUILD_DIR="$PROJECT_DIR/build"
+    fi
     EXECUTABLE="iec61850-opcua-gateway"
 elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
-    PLATFORM="windows"
+    PLATFORM="windows-x64"
     EXECUTABLE="iec61850-opcua-gateway.exe"
+    BUILD_DIR="$PROJECT_DIR/build-windows"
 else
-    PLATFORM="linux"
+    # Auto-detect Linux architecture
+    if [[ $(uname -m) == "aarch64" || $(uname -m) == "arm64" ]]; then
+        PLATFORM="linux-aarch64"
+        BUILD_DIR="$PROJECT_DIR/build-linux-arm64"
+    else
+        PLATFORM="linux-x86_64"
+        BUILD_DIR="$PROJECT_DIR/build-linux-x86"
+    fi
     EXECUTABLE="iec61850-opcua-gateway"
 fi
 
@@ -59,9 +100,9 @@ echo "Copying files..."
 cp "$BUILD_DIR/$EXECUTABLE" "$PACKAGE_DIR/"
 echo "  ✓ Executable"
 
-# Copy www directory
-cp -r "$PROJECT_DIR/www" "$PACKAGE_DIR/"
-echo "  ✓ WebUI (www/)"
+# Copy www directory (Embedded in binary now)
+# cp -r "$PROJECT_DIR/www" "$PACKAGE_DIR/"
+# echo "  ✓ WebUI (www/)"
 
 # Copy config directory (create default if not exists)
 if [ -d "$PROJECT_DIR/config" ]; then

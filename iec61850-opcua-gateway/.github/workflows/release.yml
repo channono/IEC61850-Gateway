@@ -1,5 +1,10 @@
 name: Multi-Platform Release Build
 
+permissions:
+  contents: read
+  packages: write
+  actions: write
+
 on:
   push:
     tags:
